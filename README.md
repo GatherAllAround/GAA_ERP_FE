@@ -1,62 +1,73 @@
-# 게더올어라운드 총괄 프로그램 - Frontend
+# React + TypeScript + Vite
 
-> "가장 쉬운 모임 예약과 커뮤니티 관리"
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-게더올어라운드 멤버 및 운영진을 위한 통합 예약·커뮤니티 관리 시스템의 프론트엔드 클라이언트입니다.
+Currently, two official plugins are available:
 
-## 프로젝트 개요
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- **제품명(가칭):** 게더올어라운드 총괄 프로그램
-- **대상:** 게더올어라운드 멤버 및 운영진
-- **핵심 가치:** 멤버들이 직접 참여하는 예약 프로세스의 시스템화 및 운영 효율화
-- **개발 전략:** 비용 0원 · 웹 우선 개발 · 규모 확장 시 앱 전환 고려
+## React Compiler
 
-## 배경 및 필요성
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-예약 진행 시 멤버들이 개별적으로 들어와 진행해야 하는 번거로움을 해소하기 위해, 통합 예약 시스템을 구축합니다. 멤버는 편리하게 예약하고, 운영진은 효율적으로 관리할 수 있습니다.
+## Expanding the ESLint configuration
 
-## 주요 기능
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### 인증 (Auth)
-- 카카오톡 소셜 로그인
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### 예약 및 캘린더 (메인)
-- 월 뷰(Month View): 전체 일정 흐름 파악
-- 주 뷰(Week View): 세부 시간대별 예약 현황 확인 및 신청
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### 공지사항
-- 주요 사항 전달 및 공지 확인
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-### 팀 조회
-- 소속 팀 및 멤버 정보 확인
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-### 멤버 관리 (운영진 전용)
-- 권한 부여 및 관리
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-## 네비게이션 구조
-
-| 메뉴 | 설명 |
-|------|------|
-| 달력 | 예약 및 일정 확인 (메인) |
-| 공지 | 주요 사항 전달 및 공지 확인 |
-| 팀 조회 | 소속 팀 및 멤버 정보 확인 |
-| 멤버 관리 | (운영진 전용) 권한 부여 및 관리 |
-
-## 사용자 권한
-
-| 역할 | 권한 |
-|------|------|
-| 일반 멤버 | 예약 신청, 일정 조회, 공지사항 확인 |
-| 운영진(대빵) | 운영진 권한 부여 및 관리, 멤버 관리 탭 접근 |
-
-## 기술 스택
-
-- **Frontend:** React + TypeScript (Vite)
-- **Backend:** Python / FastAPI ([GAA_ERP_BE](https://github.com/GatherAllAround/GAA_ERP_BE))
-- **플랫폼:** Web
-- **비용:** 개발 및 인프라 비용 0원 지향
-
-## 로드맵
-
-- **2026년 2월:** 기획 고도화 및 상세 설계, 화면 기획 (와이어프레임, 세미 프로토타입)
-- **2026년 3월:** MVP 버전 완성 및 출시
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
