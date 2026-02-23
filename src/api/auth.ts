@@ -7,8 +7,8 @@ interface AuthResponse {
 }
 
 export const authApi = {
-  kakaoLogin: (code: string) =>
-    apiClient.post<AuthResponse>('/api/auth/kakao/login', { code }),
+  kakaoLogin: (code: string, redirectUri: string) =>
+    apiClient.post<AuthResponse>('/api/auth/kakao/login', { code, redirect_uri: redirectUri }),
 
   getMe: () =>
     apiClient.get<User>('/api/auth/me'),

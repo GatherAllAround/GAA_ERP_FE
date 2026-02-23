@@ -15,7 +15,7 @@ export default function KakaoCallbackPage() {
       return
     }
 
-    authApi.kakaoLogin(code)
+    authApi.kakaoLogin(code, import.meta.env.VITE_KAKAO_REDIRECT_URI)
       .then(async (res) => {
         localStorage.setItem('access_token', res.data.access_token)
         const meRes = await authApi.getMe()
