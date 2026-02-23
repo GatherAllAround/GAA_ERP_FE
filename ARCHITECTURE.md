@@ -48,7 +48,15 @@
 
 - **프로토콜:** REST over HTTPS (개발 시 HTTP)
 - **데이터 포맷:** JSON (`Content-Type: application/json`)
-- **Base URL:** 환경변수 `VITE_API_BASE_URL`로 주입 (기본 `http://localhost:8000`)
+- **Base URL:** 환경변수 `VITE_API_BASE_URL`로 주입
+
+| 환경 | Base URL | 비고 |
+|------|----------|------|
+| 로컬 개발 | `http://localhost:8000` | BE 로컬 서버 |
+| 프로덕션 | `https://gaa-erp-be.onrender.com` | Render 배포 |
+
+- **Swagger UI:** https://gaa-erp-be.onrender.com/docs (실시간 API 명세 + 테스트)
+- **OpenAPI JSON:** https://gaa-erp-be.onrender.com/openapi.json (자동 생성 스키마)
 
 ### 2.2 개발 프록시
 
@@ -559,11 +567,11 @@ interface UserSession { user_session_id, user_id, session_id, is_main, skill_lev
 
 ### 9.1 환경 변수
 
-| 변수명 | 용도 | 예시 |
-|--------|------|------|
-| `VITE_API_BASE_URL` | 백엔드 API 서버 주소 | `http://localhost:8000` |
-| `VITE_KAKAO_CLIENT_ID` | 카카오 REST API 키 | `abc123...` |
-| `VITE_KAKAO_REDIRECT_URI` | OAuth 콜백 URL | `http://localhost:5173/auth/kakao/callback` |
+| 변수명 | 용도 | 로컬 | 프로덕션 |
+|--------|------|------|---------|
+| `VITE_API_BASE_URL` | 백엔드 API 서버 주소 | `http://localhost:8000` | `https://gaa-erp-be.onrender.com` |
+| `VITE_KAKAO_CLIENT_ID` | 카카오 REST API 키 | 개발용 키 | 프로덕션 키 |
+| `VITE_KAKAO_REDIRECT_URI` | OAuth 콜백 URL | `http://localhost:5173/auth/kakao/callback` | (FE 배포 후 설정) |
 
 ### 9.2 TypeScript 설정
 
